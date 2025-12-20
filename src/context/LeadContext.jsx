@@ -18,20 +18,14 @@ export const LeadProvider = ({ children }) => {
   const [salesAgent, setSalesAgent] = useState([]);
   const [leadsError, setLeadsError] = useState();
   const [lastWeekClosedLeads, setLastWeekClosedLeads] = useState([]);
-  const [totalLeadsInPipeline, setTotalLeadsInPipeline] = useState(0);
+  const [leadsNotOrInPipeline, setLeadsNotOrInPipeline] = useState(0);
   const [leadsClosedByAgent, setLeadsClosedByAgent] = useState([]);
 
-
-  const apiUrl = process.env.REACT_APP_BACKEND_URL
-  
-  
-
+  const apiUrl = process.env.REACT_APP_BACKEND_URL;
 
   const fetchAllLeads = async () => {
     try {
-      const response = await axios.get(
-        `${apiUrl}/leads`
-      );
+      const response = await axios.get(`${apiUrl}/leads`);
       const leads = response.data?.leads;
 
       // console.log(response)
@@ -41,9 +35,7 @@ export const LeadProvider = ({ children }) => {
   };
   const fetchAllSalesAgent = async () => {
     try {
-      const response = await axios.get(
-        `${apiUrl}/agents`
-      );
+      const response = await axios.get(`${apiUrl}/agents`);
       const salesAgent = response.data?.allSalesAgents;
 
       setSalesAgent(salesAgent || []);
@@ -51,21 +43,21 @@ export const LeadProvider = ({ children }) => {
   };
 
   const getAllLeadsClosedLastWeek = async () => {
-    const response = await axios.get(
-      `${apiUrl}/report/last-week`
-    );
+    const response = await axios.get(`${apiUrl}/report/last-week`);
     setLastWeekClosedLeads(response?.data.leads);
   };
   const getTotalLeadsInPipeline = async () => {
-    const response = await axios.get(
-      `${apiUrl}/report/pipeline`
-    );
-    setTotalLeadsInPipeline(response?.data.totalLeadsInPipeline);
+    const response = await axios.get(`${apiUrl}/report/pipeline`);
+
+    console.log(response);
+
+    setLeadsNotOrInPipeline({
+      activeLeads: response?.data.activeLeads,
+      closedLeads: response?.data.closedLeads,
+    });
   };
   const getLeadsClosedByAgent = async () => {
-    const response = await axios.get(
-      `${apiUrl}/report/closed-by-agent`
-    );
+    const response = await axios.get(`${apiUrl}/report/closed-by-agent`);
     setLeadsClosedByAgent(response?.data.leads);
   };
 
@@ -85,7 +77,7 @@ export const LeadProvider = ({ children }) => {
         leadsError,
         salesAgent,
         lastWeekClosedLeads,
-        totalLeadsInPipeline,
+        leadsNotOrInPipeline,
         leadsClosedByAgent,
       }}
     >

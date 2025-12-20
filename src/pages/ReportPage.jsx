@@ -4,14 +4,14 @@ import LeadsClosedByAgent from "../components/report/LeadsClosedByAgent";
 import LastWeekClosedLeads from "../components/report/LastWeekClosedLeads";
 
 const ReportPage = () => {
-  const { lastWeekClosedLeads, totalLeadsInPipeline, leadsClosedByAgent } =
+  const { lastWeekClosedLeads, leadsNotOrInPipeline, leadsClosedByAgent } =
     useLeadContext();
 
 
 
   return (
     <>
-      <TotalLeadsClosed leads={totalLeadsInPipeline} />
+      <TotalLeadsClosed leadsNotOrInPipeline={leadsNotOrInPipeline} />
       <LeadsClosedByAgent leads={leadsClosedByAgent} />
       <LastWeekClosedLeads leads={lastWeekClosedLeads} />
     </>

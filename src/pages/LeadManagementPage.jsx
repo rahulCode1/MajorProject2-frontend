@@ -5,6 +5,8 @@ import LeadManagement from "../components/leads/LeadManagement";
 const LeadManagementPage = () => {
   const { lead, comments } = useRouteLoaderData("leadId");
 
+  
+
   return (
     <>
       <LeadManagement lead={lead} comments={comments} />
@@ -21,6 +23,8 @@ export const loader = async ({ request, params }) => {
     const response = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/leads/${leadId}`
     );
+
+
 
     return response.data;
   } catch (error) {

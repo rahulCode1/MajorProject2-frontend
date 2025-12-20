@@ -24,8 +24,8 @@ const LeadStatusViewPage = () => {
   const onUpdateParams = (key, value) => {
     const params = new URLSearchParams(searchParams);
 
-    if (!key) {
-      params.delete(value);
+    if (!value) {
+      params.delete(key);
     } else {
       params.set(key, value);
     }
@@ -208,42 +208,47 @@ const LeadStatusViewPage = () => {
               sortViaCloseTime.map((lead, index) => (
                 <div key={index} className="col-12 col-lg-6">
                   <div className="card shadow-sm">
-                    <div className="card-body">
-                      <div className="d-flex align-items-start">
-                        <div className="bg-primary bg-opacity-10 rounded-circle p-2 me-3">
-                          <i className="bi bi-person-fill text-primary fs-5"></i>
-                        </div>
-                        <div className="flex-grow-1">
-                          <h6 className="fw-semibold mb-2">Lead {index + 1}</h6>
-                          <div className="mb-2">
-                            <small className="text-muted d-block">
-                              <i className="bi bi-person-badge me-1"></i>
-                              Sales Agent:{" "}
-                              <span className="fw-medium text-dark">
-                                {lead.salesAgent.name}
-                              </span>
-                            </small>
+                    <Link
+                      to={`/leads/${lead.id}`}
+                      className="text-decoration-none text-reset"
+                    >
+                      <div className="card-body">
+                        <div className="d-flex align-items-start">
+                          <div className="bg-primary bg-opacity-10 rounded-circle p-2 me-3">
+                            <i className="bi bi-person-fill text-primary fs-5"></i>
                           </div>
-                          <div className="d-flex gap-2 flex-wrap">
-                            <span
-                              className={`badge ${
-                                lead.priority === "High"
-                                  ? "bg-danger"
-                                  : lead.priority === "Medium"
-                                  ? "bg-warning text-dark"
-                                  : "bg-secondary"
-                              }`}
-                            >
-                              {lead.priority} Priority
-                            </span>
-                            <span className="badge bg-info">
-                              <i className="bi bi-clock me-1"></i>
-                              {lead.timeToClose} days
-                            </span>
+                          <div className="flex-grow-1">
+                            <h6 className="fw-semibold mb-2"> {lead.name}</h6>
+                            <div className="mb-2">
+                              <small className="text-muted d-block">
+                                <i className="bi bi-person-badge me-1"></i>
+                                Sales Agent:
+                                <span className="fw-medium text-dark">
+                                  {lead.salesAgent.name}
+                                </span>
+                              </small>
+                            </div>
+                            <div className="d-flex gap-2 flex-wrap">
+                              <span
+                                className={`badge ${
+                                  lead.priority === "High"
+                                    ? "bg-danger"
+                                    : lead.priority === "Medium"
+                                    ? "bg-warning text-dark"
+                                    : "bg-secondary"
+                                }`}
+                              >
+                                {lead.priority} Priority
+                              </span>
+                              <span className="badge bg-info">
+                                <i className="bi bi-clock me-1"></i>
+                                {lead.timeToClose} days
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 </div>
               ))

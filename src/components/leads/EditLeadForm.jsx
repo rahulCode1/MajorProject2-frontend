@@ -29,6 +29,8 @@ const EditLeadForm = () => {
   const navigate = useNavigate();
   const { lead } = useRouteLoaderData("leadId");
 
+ 
+
   // handle all input changes
   const onChangeForm = (e) => {
     const { id, value, type, checked } = e.target;
@@ -62,9 +64,8 @@ const EditLeadForm = () => {
         `${process.env.REACT_APP_BACKEND_URL}/leads/${leadId}`,
         formData
       );
-      
 
-        setFormData(initialData);
+      setFormData(initialData);
       showSuccessToast(toastId, "Lead  update successfully.");
     } catch (error) {
       setError(
@@ -79,8 +80,6 @@ const EditLeadForm = () => {
     }
     navigate(`/leads/${leadId}`);
   };
-
-
 
   useEffect(() => {
     setFormData(lead);
@@ -262,7 +261,9 @@ export const loader = async ({ request, params }) => {
   const leadId = params.id;
 
   try {
-    const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/leads/${leadId}`);
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND_URL}/leads/${leadId}`
+    );
 
     return response.data;
   } catch (error) {

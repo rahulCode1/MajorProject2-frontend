@@ -11,7 +11,8 @@ const LeadsListItem = ({ leads }) => {
     searchParams.get("status") === null
       ? leads
       : leads.filter((lead) => lead.status === searchParams.get("status"));
-  const salesAgentFilter = !salesAgentId
+  
+      const salesAgentFilter = !salesAgentId
     ? filteredLeads
     : filteredLeads.filter((lead) => lead.salesAgent._id === salesAgentId);
 
@@ -35,6 +36,8 @@ const LeadsListItem = ({ leads }) => {
     }
     setSearchParams(params);
   };
+
+  
 
   let displayLeads = searchParams.get("priority")
     ? [...salesAgentFilter].sort((a, b) => {

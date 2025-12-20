@@ -289,9 +289,7 @@ const LeadForm = () => {
                         {isLoading && <SubmitLoadingSpinner />}
                         {isLoading ? "Adding..." : "Add New Lead"}
                       </button>
-                      <Link to="/leads" className="btn btn-secondary">
-                        Cancel
-                      </Link>
+                    
                     </div>
                   </form>
                 </div>

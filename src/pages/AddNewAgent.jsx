@@ -78,9 +78,7 @@ const AddNewAgent = () => {
                         {isSubmit && <SubmitLoadingSpinner />}
                         {isSubmit ? "Adding agent..." : "Add agent"}
                       </button>
-                      <Link to="/salesAgent" className="btn btn-secondary">
-                        Cancel
-                      </Link>
+                   
                     </div>
                   </Form>
                 </div>

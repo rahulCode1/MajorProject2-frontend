@@ -1,12 +1,19 @@
 import { Pie } from "react-chartjs-2";
 
-const TotalLeadsClosed = ({ leads }) => {
+const TotalLeadsClosed = ({ leadsNotOrInPipeline }) => {
   const data = {
-    labels: ["Leads in pipeline"],
+    labels: [
+      `Active leads: ${leadsNotOrInPipeline.activeLeads} .`,
+      `Closed leads: ${leadsNotOrInPipeline.closedLeads}. `,
+    ],
     datasets: [
       {
-        data: [leads],
-        backgroundColor: ["#4ade80"],
+        label: "Leads",
+        data: [
+          leadsNotOrInPipeline.activeLeads,
+          leadsNotOrInPipeline.closedLeads,
+        ],
+        backgroundColor: ["#4ade80", "	#FFBF00"],
       },
     ],
   };
@@ -27,7 +34,7 @@ const TotalLeadsClosed = ({ leads }) => {
 
   return (
     <>
-      <Pie data={data}  />
+      <Pie data={data} />
     </>
   );
 };
