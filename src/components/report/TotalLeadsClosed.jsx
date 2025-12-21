@@ -19,23 +19,35 @@ const TotalLeadsClosed = ({ leadsNotOrInPipeline }) => {
   };
 
   const options = {
-    responsive: true,
+    layout: {
+      padding: { top: 20 },
+    },
     plugins: {
-      legend: {
-        // position: "top",
+      datalabels: {
+        anchor: "end",
+        align: "top",
+        offset: 6,
+        clamp: true,
+        font: { weight: "bold" },
       },
     },
     scales: {
+      x: {
+        ticks: {
+          padding: 15,
+        },
+      },
       y: {
         beginAtZero: true,
+        grace: "10%",
       },
     },
   };
 
   return (
-    <>
-      <Pie data={data} />
-    </>
+    <div style={{ width: "400px", height: "400px", margin: "auto" }}>
+      <Pie data={data} options={options} />
+    </div>
   );
 };
 

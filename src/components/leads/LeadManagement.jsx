@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link , useRouteLoaderData} from "react-router-dom";
 import CommentPage from "../../pages/CommentPage";
 
-const LeadManagement = ({ lead, comments }) => {
-
+const LeadManagement = () => {
+  const { lead, comments } = useRouteLoaderData("leadId");
 
 
   return (

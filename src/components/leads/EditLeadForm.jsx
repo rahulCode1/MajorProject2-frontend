@@ -1,101 +1,26 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams, useRouteLoaderData } from "react-router-dom";
-import axios from "axios";
+import { useRouteLoaderData, Form, useNavigation } from "react-router-dom";
 import SubmitLoadingSpinner from "../../components/SubmitLoadingSpinnr";
-import {
-  showLoadingToast,
-  showSuccessToast,
-  showErrorToast,
-} from "../../utils/toast";
+
 import useLeadContext from "../../context/LeadContext";
 
 const EditLeadForm = () => {
-  const initialData = {
-    name: "",
-    source: "",
-    salesAgent: "",
-    status: "",
-    tags: [],
-    timeToClose: "",
-    priority: "",
-    closedAt: "",
-  };
-
-  const [formData, setFormData] = useState(initialData);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const { salesAgent } = useLeadContext();
-  const leadId = useParams().id;
-  const navigate = useNavigate();
+
   const { lead } = useRouteLoaderData("leadId");
-
- 
-
-  // handle all input changes
-  const onChangeForm = (e) => {
-    const { id, value, type, checked } = e.target;
-
-    // handle checkboxes (tags)
-    if (type === "checkbox") {
-      setFormData((prev) => ({
-        ...prev,
-        tags: checked
-          ? [...prev.tags, value]
-          : prev.tags.filter((tag) => tag !== value),
-      }));
-      return;
-    }
-
-    // handle normal inputs & selects
-    setFormData((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const toastId = showLoadingToast("Update lead...");
-
-    try {
-      setIsLoading(true);
-      setError(null);
-      const response = await axios.patch(
-        `${process.env.REACT_APP_BACKEND_URL}/leads/${leadId}`,
-        formData
-      );
-
-      setFormData(initialData);
-      showSuccessToast(toastId, "Lead  update successfully.");
-    } catch (error) {
-      setError(
-        error.response?.data?.message || "Error occurred while update lead."
-      );
-      showErrorToast(
-        toastId,
-        error.response?.data?.message || "Error occurred while update lead ❌"
-      );
-    } finally {
-      setIsLoading(false);
-    }
-    navigate(`/leads/${leadId}`);
-  };
-
-  useEffect(() => {
-    setFormData(lead);
-  }, []);
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "submitting";
 
   return (
-    <form className="container py-4" onSubmit={handleSubmit}>
+    <Form method="post" className="container py-4">
       {/* Lead Name */}
       <div className="mb-3">
         <label className="form-label">Lead Name</label>
         <input
           type="text"
           id="name"
+          name="name"
           className="form-control"
-          onChange={onChangeForm}
-          value={formData.name}
+          defaultValue={lead && lead.name}
           required
         />
       </div>
@@ -107,10 +32,11 @@ const EditLeadForm = () => {
             <label className="form-label">Lead Source</label>
             <select
               id="source"
+              name="source"
               className="form-select"
-              value={formData.source}
-              onChange={onChangeForm}
-              required
+              defaultValue={lead && lead.source}
+
+              // required
             >
               <option value="" disabled>
                 Select Lead Source
@@ -130,10 +56,11 @@ const EditLeadForm = () => {
             <input
               type="date"
               id="closedAt"
+              name="closedAt"
               className="form-control"
-              value={formData.closedAt.split("T")[0]}
-              onChange={onChangeForm}
-              required
+              defaultValue={lead && lead.closedAt.split("T")[0]}
+
+              // required
             />
           </div>
         </div>
@@ -146,10 +73,11 @@ const EditLeadForm = () => {
             <label className="form-label">Lead Status</label>
             <select
               id="status"
+              name="status"
               className="form-select"
-              value={formData.status}
-              onChange={onChangeForm}
-              required
+              defaultValue={lead && lead.status}
+
+              // required
             >
               <option value="" disabled>
                 Lead Status
@@ -168,10 +96,11 @@ const EditLeadForm = () => {
             <label className="form-label">Assigned Sales Agent</label>
             <select
               id="salesAgent"
+              name="salesAgent"
               className="form-select"
-              value={formData.salesAgent._id}
-              onChange={onChangeForm}
-              required
+              defaultValue={lead && lead.salesAgent._id}
+
+              // required
             >
               {salesAgent.map((agent) => (
                 <option value={agent.id} id="salesAgent">
@@ -191,10 +120,11 @@ const EditLeadForm = () => {
             <input
               type="number"
               id="timeToClose"
+              name="timeToClose"
               className="form-control"
-              value={formData.timeToClose}
-              onChange={onChangeForm}
-              required
+              defaultValue={lead && lead.timeToClose}
+
+              // required
             />
           </div>
         </div>
@@ -204,10 +134,11 @@ const EditLeadForm = () => {
             <label className="form-label">Priority</label>
             <select
               id="priority"
+              name="priority"
               className="form-select"
-              value={formData.priority}
-              onChange={onChangeForm}
-              required
+              defaultValue={lead && lead.priority}
+
+              // required
             >
               <option value="" disabled>
                 Priority
@@ -222,15 +153,17 @@ const EditLeadForm = () => {
 
       {/* Tags */}
       <div className="mb-3">
-        <label className="form-label">Tags</label>
+        <label className="form-label" htmlFor="tags">
+          Tags
+        </label>
 
         <div className="form-check">
           <input
             type="checkbox"
             className="form-check-input"
             value="High Value"
-            checked={formData.tags.includes("High Value")}
-            onChange={onChangeForm}
+            name="tags"
+            defaultChecked={lead && lead.tags.includes("High Value")}
           />
           <label className="form-check-label">High Value</label>
         </div>
@@ -240,8 +173,8 @@ const EditLeadForm = () => {
             type="checkbox"
             className="form-check-input"
             value="Follow-up"
-            checked={formData.tags.includes("Follow-up")}
-            onChange={onChangeForm}
+            name="tags"
+            defaultChecked={lead && lead.tags.includes("Follow-up")}
           />
           <label className="form-check-label">Follow-up</label>
         </div>
@@ -251,28 +184,8 @@ const EditLeadForm = () => {
         {isLoading && <SubmitLoadingSpinner />}
         {isLoading ? "Update..." : "Update Lead"}
       </button>
-    </form>
+    </Form>
   );
 };
 
 export default EditLeadForm;
-
-export const loader = async ({ request, params }) => {
-  const leadId = params.id;
-
-  try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/leads/${leadId}`
-    );
-
-    return response.data;
-  } catch (error) {
-    throw new Response(
-      JSON.stringify({
-        message:
-          error.response?.data?.message || "Failed to fetch lead details.",
-      }),
-      { status: error.response?.status || 500 }
-    );
-  }
-};

@@ -139,7 +139,7 @@ const MainNavigation = () => {
               style={{ transition: "all 0.2s ease" }}
             >
               <i className="bi bi-star me-2"></i>
-               Leads Via Status 
+              Leads Via Status
             </NavLink>
           </li>
 
@@ -155,6 +155,20 @@ const MainNavigation = () => {
             >
               <i className="bi bi-diagram-3 me-2"></i>
               Leads by Agent
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to="/setting"
+              className={({ isActive }) =>
+                `nav-link rounded ${
+                  isActive ? "bg-secondary text-white" : "text-light"
+                }`
+              }
+              style={{ transition: "all 0.2s ease" }}
+            >
+              <i className="bi bi-diagram-3 me-2"></i>
+              Setting
             </NavLink>
           </li>
         </ul>

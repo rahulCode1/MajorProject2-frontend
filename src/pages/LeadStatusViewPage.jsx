@@ -1,9 +1,10 @@
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, Link , useRouteLoaderData} from "react-router-dom";
 import useLeadContext from "../context/LeadContext";
 
 const LeadStatusViewPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { allLeads, salesAgent } = useLeadContext();
+  const {  salesAgent } = useLeadContext();
+    const allLeads = useRouteLoaderData("allLeads")
   const filterNewLeads =
     searchParams.get("status") === null
       ? allLeads

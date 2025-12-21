@@ -1,9 +1,10 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useRouteLoaderData, useSearchParams } from "react-router-dom";
 
 import useLeadContext from "../context/LeadContext";
 const LeadsBySalesAgent = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { allLeads, salesAgent } = useLeadContext();
+  const {  salesAgent } = useLeadContext();
+  const allLeads = useRouteLoaderData("allLeads")
 
   const salesAgentId = searchParams.get("agentId");
   let filterLeads =

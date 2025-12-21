@@ -25,7 +25,7 @@ const LeadForm = () => {
   const [formData, setFormData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const { salesAgent } = useLeadContext();
+  const { salesAgent, setLeads, allLeads } = useLeadContext();
   // handle all input changes
   const onChangeForm = (e) => {
     const { id, value, type, checked } = e.target;
@@ -48,8 +48,6 @@ const LeadForm = () => {
     }));
   };
 
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const toastId = showLoadingToast("Adding lead...");
@@ -64,6 +62,7 @@ const LeadForm = () => {
       // console.log("Lead created:", response.data);
 
       setFormData(initialData);
+      setLeads((prevStat) => [...prevStat, { ...response?.data.lead }]);
       showSuccessToast(toastId, "New lead added successfully.");
     } catch (error) {
       setError(
@@ -77,6 +76,8 @@ const LeadForm = () => {
       setIsLoading(false);
     }
   };
+
+
 
   return (
     <>
@@ -199,7 +200,9 @@ const LeadForm = () => {
                               Assigned Sales Agent
                             </option>
                             {salesAgent.map((agent) => (
-                              <option value={agent.id} key={agent.id}>{agent.name}</option>
+                              <option value={agent.id} key={agent.id}>
+                                {agent.name}
+                              </option>
                             ))}
                           </select>
                         </div>
@@ -289,7 +292,6 @@ const LeadForm = () => {
                         {isLoading && <SubmitLoadingSpinner />}
                         {isLoading ? "Adding..." : "Add New Lead"}
                       </button>
-                    
                     </div>
                   </form>
                 </div>

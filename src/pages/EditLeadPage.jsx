@@ -1,6 +1,46 @@
+import axios from "axios";
+import { redirect } from "react-router-dom";
 import EditLeadForm from "../components/leads/EditLeadForm";
+import {
+  showLoadingToast,
+  showSuccessToast,
+  showErrorToast,
+} from "../utils/toast";
+
 const EditLeadPage = () => {
   return <EditLeadForm />;
 };
 
 export default EditLeadPage;
+
+export const action = async ({ request, params }) => {
+  const leadId = params.id;
+  const formData = await request.formData();
+  const toastId = showLoadingToast("Update lead...");
+
+  const data = {
+    name: formData.get("name"),
+    source: formData.get("source"),
+    closedAt: formData.get("closedAt"),
+    status: formData.get("status"),
+    salesAgent: formData.get("salesAgent"),
+    timeToClose: Number(formData.get("timeToClose")),
+    priority: formData.get("priority"),
+    tags: formData.getAll("tags"), // ✅ multiple checkbox
+  };
+
+  try {
+    await axios.patch(
+      `${process.env.REACT_APP_BACKEND_URL}/leads/${leadId}`,
+      data
+    );
+
+    showSuccessToast(toastId, "Lead  update successfully.");
+    return redirect(`/leads/${leadId}`);
+  } catch (error) {
+    showErrorToast(
+      toastId,
+      error.response?.data?.message || "Error occurred while update lead ❌"
+    );
+  }
+};
