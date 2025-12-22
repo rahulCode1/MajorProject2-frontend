@@ -17,9 +17,9 @@ import LeadsList from './pages/LeadsList';
 import ReportPage from './pages/ReportPage';
 import LeadStatusViewPage from './pages/LeadStatusViewPage';
 import EditLeadPage, { action as editLeadAction } from './pages/EditLeadPage';
-import LeadsBySalesAgent from './pages/LeadsBySalesAgent';
+import LeadsBySalesAgentPage from './pages/LeadsBySalesAgentPage';
 import SettingLayout from "./components/layout/SettingLayout"
-import Leads, { action as deleteLeadAction } from './components/setting/Leads';
+import SettingLeadsPage, { action as deleteLeadAction } from './components/setting/SettingLeadsPage';
 import SalesAgents from './components/setting/SalesAgent';
 
 const router = createBrowserRouter([
@@ -29,6 +29,7 @@ const router = createBrowserRouter([
     id: "allLeads",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
+
     children: [
       { index: true, element: <DashboardScreen />, },
       {
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
           },
           { path: "addLeads", element: <LeadForm /> },
           { path: "newLeads", element: <LeadStatusViewPage /> },
-          { path: "leadByAgents", element: <LeadsBySalesAgent /> }
+          { path: "leadByAgents", element: <LeadsBySalesAgentPage /> }
         ]
       },
       {
@@ -61,7 +62,7 @@ const router = createBrowserRouter([
         element: <SettingLayout />,
         children: [
           { index: true, element: <Navigate to={"leads"} replace /> },
-          { path: "leads", element: <Leads />, action: deleteLeadAction },
+          { path: "leads", element: <SettingLeadsPage />, action: deleteLeadAction },
           { path: "agents", element: <SalesAgents /> }
         ]
       }
@@ -74,7 +75,7 @@ function App() {
   return (
     <LeadProvider>
 
-      <RouterProvider router={router} />
+      <RouterProvider router={router}  />
     </LeadProvider>
   );
 }

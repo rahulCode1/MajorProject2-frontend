@@ -1,5 +1,5 @@
 import {
-  useRouteLoaderData,
+  
   Link,
   useFetcher,
   useNavigation,
@@ -10,9 +10,9 @@ import {
   showSuccessToast,
 } from "../../utils/toast";
 import axios from "axios";
-const Leads = () => {
+const ManageLeads = ({leads }) => {
   const fetcher = useFetcher();
-  const leads = useRouteLoaderData("allLeads");
+  
   const navigation = useNavigation();
 
   const isLoading = navigation.state === "submitting";
@@ -80,7 +80,9 @@ const Leads = () => {
                               <div className="col-sm-6">
                                 <small className="text-muted d-block">
                                   <i className="bi bi-person-badge me-1"></i>
-                                  {lead.salesAgent.name}
+                                  {lead.salesAgent
+                                    ? lead.salesAgent.name
+                                    : "Unknown"}
                                 </small>
                               </div>
                               <div className="col-sm-6">
@@ -133,7 +135,7 @@ const Leads = () => {
   );
 };
 
-export default Leads;
+export default ManageLeads;
 
 export const action = async ({ request }) => {
   const formData = await request.formData();

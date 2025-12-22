@@ -1,14 +1,26 @@
 import axios from "axios";
-import { redirect } from "react-router-dom";
+import { Await, redirect, useRouteLoaderData } from "react-router-dom";
 import EditLeadForm from "../components/leads/EditLeadForm";
 import {
   showLoadingToast,
   showSuccessToast,
   showErrorToast,
 } from "../utils/toast";
+import { Suspense } from "react";
+import Loading from "../components/Loading";
 
 const EditLeadPage = () => {
-  return <EditLeadForm />;
+  const { lead } = useRouteLoaderData("leadId");
+
+  return (
+    <>
+      <Suspense fallback={<Loading />}>
+        <Await resolve={lead}>
+          {(isLoadLeadInfo) => <EditLeadForm lead={isLoadLeadInfo.lead} />}
+        </Await>
+      </Suspense>
+    </>
+  );
 };
 
 export default EditLeadPage;

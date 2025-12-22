@@ -38,7 +38,7 @@ const SalesAgent = () => {
     <>
       <div className="container-fluid p-0">
         {/* Main Content */}
-        <div className="container-fluid px-4 py-4">
+        <div className="container-fluid py-4">
           <div className="row justify-content-center">
             <div className="col-lg-10">
               <div className="card shadow-sm">

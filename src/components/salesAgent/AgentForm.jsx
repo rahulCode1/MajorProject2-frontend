@@ -59,10 +59,10 @@ const AgentForm = () => {
     <>
       <div className="container-fluid p-0">
         {/* Header */}
-        <div className="bg-white shadow-sm border-bottom sticky-top">
-          <div className="container-fluid px-4 py-3">
+        <div className="bg-white shadow-sm border-bottom sticky-top rounded">
+          <div className="container-fluid  py-3">
             <div className="d-flex justify-content-between align-items-center">
-              <h1 className="h3 mb-0 fw-bold">Add New Sales Agent</h1>
+              <h1 className="h3 mb-0 fw-bold">Add  Agent</h1>
               <div className="d-flex gap-2">
                 <Link to="/" className="btn btn-outline-secondary">
                   <i className="bi bi-house-door me-2"></i>
@@ -74,7 +74,7 @@ const AgentForm = () => {
         </div>
 
         {/* Form Container */}
-        <div className="container py-4">
+        <div className=" py-4">
           <div className="row justify-content-center">
             <div className="col-lg-6 col-md-8">
               <div className="card shadow-sm">

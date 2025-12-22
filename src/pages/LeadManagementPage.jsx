@@ -1,32 +1,41 @@
 import axios from "axios";
-import { redirect } from "react-router-dom";
+import { Await, redirect, useRouteLoaderData } from "react-router-dom";
 import LeadManagement from "../components/leads/LeadManagement";
 import {
   showErrorToast,
   showLoadingToast,
   showSuccessToast,
 } from "../utils/toast";
+import { Suspense } from "react";
+import Loading from "../components/Loading";
 
 const LeadManagementPage = () => {
-
-
+  const { lead } = useRouteLoaderData("leadId");
   return (
     <>
-      <LeadManagement />
+      <Suspense fallback={<Loading />}>
+        <Await resolve={lead}>
+          {(isLeadLoad) => (
+            <LeadManagement
+              lead={isLeadLoad.lead}
+              comments={isLeadLoad.comments}
+            />
+          )}
+        </Await>
+      </Suspense>
     </>
   );
 };
 
 export default LeadManagementPage;
 
-export const loader = async ({ request, params }) => {
-  const leadId = params.id;
-
+const lead = async (leadId) => {
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/leads/${leadId}`
     );
 
+    // console.log(response.data);
     return response.data;
   } catch (error) {
     throw new Response(
@@ -37,6 +46,31 @@ export const loader = async ({ request, params }) => {
       { status: error.response?.status || 500 }
     );
   }
+};
+
+export const loader = async ({ request, params }) => {
+  const leadId = params.id;
+
+  // try {
+  //   const response = await axios.get(
+  //     `${process.env.REACT_APP_BACKEND_URL}/leads/${leadId}`
+  //   );
+
+  //   console.log(response.data);
+  //   return response.data;
+  // } catch (error) {
+  //   throw new Response(
+  //     JSON.stringify({
+  //       message:
+  //         error.response?.data?.message || "Failed to fetch lead details.",
+  //     }),
+  //     { status: error.response?.status || 500 }
+  //   );
+  // }
+
+  return {
+    lead: lead(leadId),
+  };
 };
 
 export const actions = async ({ request, params }) => {

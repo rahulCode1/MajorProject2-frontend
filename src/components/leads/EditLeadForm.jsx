@@ -1,12 +1,15 @@
-import { useRouteLoaderData, Form, useNavigation } from "react-router-dom";
+import {  Form, useNavigation } from "react-router-dom";
 import SubmitLoadingSpinner from "../../components/SubmitLoadingSpinnr";
 
 import useLeadContext from "../../context/LeadContext";
 
-const EditLeadForm = () => {
+const EditLeadForm = ({lead }) => {
   const { salesAgent } = useLeadContext();
 
-  const { lead } = useRouteLoaderData("leadId");
+ 
+
+ 
+
   const navigation = useNavigation();
   const isLoading = navigation.state === "submitting";
 
@@ -98,9 +101,9 @@ const EditLeadForm = () => {
               id="salesAgent"
               name="salesAgent"
               className="form-select"
-              defaultValue={lead && lead.salesAgent._id}
+              defaultValue={lead &&  lead.salesAgent && lead.salesAgent.id }
 
-              // required
+              required
             >
               {salesAgent.map((agent) => (
                 <option value={agent.id} id="salesAgent">

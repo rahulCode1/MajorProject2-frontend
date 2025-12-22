@@ -5,8 +5,9 @@ import MainNavigation from "./MainNavigation";
 
 const RootLayout = () => {
   return (
-    <div className="d-flex min-vh-100">
+    <div className="d-flex flex-column flex-md-row min-vh-100">
       <MainNavigation />
+
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -15,11 +16,13 @@ const RootLayout = () => {
         pauseOnHover
         draggable
       />
-      <main className="flex-grow-1 p- bg-light">
+
+      <main className="flex-grow-1 p-3 bg-light">
         <Outlet />
       </main>
     </div>
   );
 };
+
 
 export default RootLayout;

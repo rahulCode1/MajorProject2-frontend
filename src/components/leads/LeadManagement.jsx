@@ -1,9 +1,10 @@
-import { Link , useRouteLoaderData} from "react-router-dom";
+import { Link } from "react-router-dom";
 import CommentPage from "../../pages/CommentPage";
 
-const LeadManagement = () => {
-  const { lead, comments } = useRouteLoaderData("leadId");
+const LeadManagement = ({lead, comments }) => {
 
+
+  
 
   return (
     <>
@@ -31,7 +32,9 @@ const LeadManagement = () => {
                     </div>
                     <div className="col-12 col-md-6">
                       <p className="text-muted small mb-1">Sales Agent</p>
-                      <h5 className="fw-bold mb-0">{lead.salesAgent.name}</h5>
+                      <h5 className="fw-bold mb-0">
+                        {lead.salesAgent ? lead.salesAgent.name : "Unknown"}
+                      </h5>
                     </div>
                     <div className="col-12 col-md-6">
                       <p className="text-muted small mb-1">Lead Source</p>
@@ -90,10 +93,16 @@ const LeadManagement = () => {
                                 minWidth: "40px",
                               }}
                             >
-                              {comment.author.name.charAt(0).toUpperCase()}
+                              {comment && comment.author
+                                ? comment.author.name.charAt(0).toUpperCase()
+                                : "U"}
                             </div>
                             <div className="flex-grow-1">
-                              <h6 className="fw-bold mb-1">{comment.author.name}</h6>
+                              <h6 className="fw-bold mb-1">
+                                {comment.author
+                                  ? comment.author.name
+                                  : "Unknown"}
+                              </h6>
                               <p className="text-muted mb-0">
                                 {comment.commentText}
                               </p>

@@ -5,14 +5,14 @@ const SalesAgentsCard = ({ salesAgent }) => {
     <>
       <div className="container-fluid p-0">
         {/* Header */}
-        <div className="bg-white shadow-sm border-bottom sticky-top">
+        <div className="bg-white shadow-sm border-bottom sticky-top rounded">
           <div className="container-fluid px-4 py-3">
             <div className="d-flex justify-content-between align-items-center">
-              <h1 className="h3 mb-0 fw-bold">All Sales Agents</h1>
+              <h1 className="h3 mb-0 fw-bold"> Sales Agents</h1>
               <div className="d-flex gap-2">
                 <Link to="add" className="btn btn-primary">
                   <i className="bi bi-plus-circle me-2"></i>
-                  Add New Agent
+                  Add  Agent
                 </Link>
               </div>
             </div>
@@ -20,13 +20,13 @@ const SalesAgentsCard = ({ salesAgent }) => {
         </div>
 
         {/* Main Content */}
-        <div className="container-fluid px-4 py-4">
-          <div className="row justify-content-center">
-            <div className="col-lg-10">
-              <div className="card shadow-sm">
-                <div className="card-body p-0">
+        <div className="container-fluid  py-4 ">
+          <div className="row justify-content-center ">
+            <div className="col-lg-10 ">
+              <div className="card shadow-sm ">
+                <div className="card-body p-0 ">
                   {salesAgent && salesAgent.length !== 0 ? (
-                    <div className="list-group list-group-flush">
+                    <div className="list-group list-group-flush rounded">
                       {salesAgent.map((agent, index) => (
                         <div key={index} className="list-group-item">
                           <div className="d-flex align-items-center">

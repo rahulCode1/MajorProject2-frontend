@@ -25,7 +25,7 @@ const LeadForm = () => {
   const [formData, setFormData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const { salesAgent, setLeads, allLeads } = useLeadContext();
+  const { salesAgent, setLeads } = useLeadContext();
   // handle all input changes
   const onChangeForm = (e) => {
     const { id, value, type, checked } = e.target;
@@ -83,10 +83,10 @@ const LeadForm = () => {
     <>
       <div className="container-fluid p-0">
         {/* Header */}
-        <div className="bg-white shadow-sm border-bottom sticky-top">
+        <div className="bg-white shadow-sm border-bottom sticky-top rounded">
           <div className="container-fluid px-4 py-3">
             <div className="d-flex justify-content-between align-items-center">
-              <h1 className="h3 mb-0 fw-bold">Add New Lead</h1>
+              <h1 className="h3 mb-0 fw-bold">Add  Lead</h1>
               <Link to="/leads" className="btn btn-outline-secondary">
                 <i className="bi bi-arrow-left me-2"></i>
                 Back to Leads
@@ -96,7 +96,7 @@ const LeadForm = () => {
         </div>
 
         {/* Form Container */}
-        <div className="container py-4">
+        <div className=" py-4">
           <div className="row justify-content-center">
             <div className="col-lg-8">
               <div className="card shadow-sm">

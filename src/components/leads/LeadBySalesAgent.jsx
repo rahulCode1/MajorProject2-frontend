@@ -1,16 +1,19 @@
 import { Link, useRouteLoaderData, useSearchParams } from "react-router-dom";
+import Leads from "./Leads";
 
-import useLeadContext from "../context/LeadContext";
-const LeadsBySalesAgent = () => {
+import useLeadContext from "../../context/LeadContext";
+const LeadsBySalesAgent = ({allLeads}) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const {  salesAgent } = useLeadContext();
-  const allLeads = useRouteLoaderData("allLeads")
+  const { salesAgent } = useLeadContext();
+ 
 
   const salesAgentId = searchParams.get("agentId");
   let filterLeads =
     salesAgentId === null
       ? allLeads
-      : allLeads.filter((lead) => lead.salesAgent.id === salesAgentId);
+      : allLeads.filter(
+          (lead) => lead.salesAgent && lead.salesAgent.id === salesAgentId
+        );
 
   filterLeads =
     searchParams.get("status") === null
@@ -61,9 +64,9 @@ const LeadsBySalesAgent = () => {
     <>
       <div className="min-vh-100 bg-light">
         {/* Header Section */}
-        <div className="bg-white shadow-sm">
-          <div className="container py-4 d-flex justify-content-between align-items-center px-3">
-            <h1 className="h2 mb-0 fw-bold">Leads by Sales Agent</h1>
+        <div className="bg-white shadow-sm mb-3">
+          <div className=" py-2 d-flex justify-content-between align-items-center px-2">
+            <h5 className=" mb-0 fw-bold">Leads by Sales Agent</h5>
             <Link
               to={"/"}
               className="text-decoration-none  mb-2 d-inline-block  btn btn-secondary"
@@ -73,7 +76,7 @@ const LeadsBySalesAgent = () => {
           </div>
         </div>
 
-        <div className="container my-2">
+        <div className=" my-2">
           {/* Sales Agent Filter */}
           <div className="card mb-4 shadow-sm">
             <div className="card-body">
@@ -102,71 +105,8 @@ const LeadsBySalesAgent = () => {
             </div>
           </div>
 
-          {/* Leads Display */}
-          <div className="row g-4 mb-4">
-            {sortViaCloseTime && sortViaCloseTime.length !== 0 ? (
-              sortViaCloseTime.map((lead) => (
-                <div className="col-12 col-lg-6" key={lead.id}>
-                  <Link
-                    to={`/leads/${lead.id}`}
-                    className="text-decoration-none"
-                  >
-                    <div className="card h-100 shadow-sm border-0">
-                      <div className="card-body">
-                        <div className="d-flex align-items-start">
-                          <div className="bg-primary bg-opacity-10 rounded-circle p-2 me-3">
-                            <i className="bi bi-person-fill text-primary fs-5"></i>
-                          </div>
-                          <div className="flex-grow-1">
-                            <h6 className="fw-semibold mb-2">
-                              Sales Agent: {lead.salesAgent.name}
-                            </h6>
-                            <div className="mb-2">
-                              <small className="text-muted d-block">
-                                <span className="fw-medium text-dark">
-                                Lead:   {lead.name}
-                                </span>
-                              </small>
-                            </div>
-                            <div className="d-flex gap-2 flex-wrap">
-                              <span
-                                className={`badge ${
-                                  lead.priority === "High"
-                                    ? "bg-danger"
-                                    : lead.priority === "Medium"
-                                    ? "bg-warning text-dark"
-                                    : "bg-secondary"
-                                }`}
-                              >
-                                {lead.priority} Priority
-                              </span>
-                              <span className="badge bg-info">
-                                <i className="bi bi-clock me-1"></i>
-                                {lead.timeToClose} days
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))
-            ) : (
-              <div className="col-12">
-                <div
-                  className="alert alert-info border-0 shadow-sm"
-                  role="alert"
-                >
-                  <i className="bi bi-info-circle me-2"></i>
-                  No lead found with this agent.
-                </div>
-              </div>
-            )}
-          </div>
-
           {/* Filters Section */}
-          <div className="card shadow-sm border-0">
+          <div className="card shadow-sm border-0 mb-2">
             <div className="card-header bg-white py-3">
               <h5 className="mb-0 fw-bold">
                 <i className="bi bi-funnel me-2"></i>Filters
@@ -235,6 +175,25 @@ const LeadsBySalesAgent = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Leads Display */}
+          <div className="row g-4 mb-4">
+            {sortViaCloseTime && sortViaCloseTime.length !== 0 ? (
+              sortViaCloseTime.map((lead, index) => (
+                <Leads lead={lead} index={index} />
+              ))
+            ) : (
+              <div className="col-12">
+                <div
+                  className="alert alert-info border-0 shadow-sm"
+                  role="alert"
+                >
+                  <i className="bi bi-info-circle me-2"></i>
+                  No lead found with this agent.
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

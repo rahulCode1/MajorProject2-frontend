@@ -1,22 +1,28 @@
 import axios from "axios";
+import { Await } from "react-router-dom";
+import { Suspense } from "react";
+
 import DashboardItem from "../components/deshboard/DeshboardItem";
-import useLeadContext from "../context/LeadContext";
+import LoadingSpinner from "../components/Loading";
+
 import { useRouteLoaderData } from "react-router-dom";
 const DashboardScreen = () => {
-  const allLeads = useRouteLoaderData("allLeads");
+  const { leads } = useRouteLoaderData("allLeads");
 
   return (
     <>
-      <div className="">
-        <DashboardItem leads={allLeads} />
-      </div>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Await resolve={leads}>
+          {(isLoadingData) => <DashboardItem leads={isLoadingData} />}
+        </Await>
+      </Suspense>
     </>
   );
 };
 
 export default DashboardScreen;
 
-export const loader = async () => {
+const leads = async () => {
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/leads`
@@ -31,4 +37,10 @@ export const loader = async () => {
       { status: error.response?.status || 500 }
     );
   }
+};
+
+export const loader = async () => {
+  return {
+    leads: leads(),
+  };
 };

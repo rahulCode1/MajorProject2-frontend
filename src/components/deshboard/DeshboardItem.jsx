@@ -13,12 +13,12 @@ const DashboardItem = ({ leads }) => {
     <>
       <div className="container-fluid p-0">
         {/* Header */}
-        <div className="bg-white shadow-sm border-bottom sticky-top">
+        <div className="bg-white shadow-sm border-bottom sticky-top rounded">
           <div className="container-fluid px-4 py-3">
             <div className="d-flex justify-content-between align-items-center">
               <h1 className="h3 mb-0 fw-bold text-dark">Dashboard</h1>
               <Link
-                to="addLeads"
+                to="leads/addLeads"
                 className="btn btn-primary d-none d-md-inline-flex align-items-center"
               >
                 <i className="bi bi-plus-circle me-2"></i>
@@ -28,7 +28,51 @@ const DashboardItem = ({ leads }) => {
           </div>
         </div>
 
-        <div className="container-fluid px-4 py-4">
+        <div className="container-fluid  py-4">
+          {/* Quick Filters */}
+          <div className="card border-0 shadow-sm mb-4">
+            <div className="card-body">
+              <h5 className="card-title mb-3 fw-semibold">Quick Filters</h5>
+              <div className="d-flex flex-wrap gap-2">
+                <button
+                  className="btn btn-outline-primary"
+                  onClick={() => setSearchParams("status=New")}
+                >
+                  <i className="bi bi-star me-1"></i>
+                  New
+                </button>
+                <button
+                  className="btn btn-outline-info"
+                  onClick={() => setSearchParams("status=Contacted")}
+                >
+                  <i className="bi bi-telephone me-1"></i>
+                  Contacted
+                </button>
+                <button
+                  className="btn btn-outline-success"
+                  onClick={() => setSearchParams("status=Qualified")}
+                >
+                  <i className="bi bi-check-circle me-1"></i>
+                  Qualified
+                </button>
+                <button
+                  className="btn btn-outline-warning"
+                  onClick={() => setSearchParams("status=Proposal Sent")}
+                >
+                  <i className="bi bi-file-earmark-text me-1"></i>
+                  Proposal Sent
+                </button>
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={() => setSearchParams("status=Closed")}
+                >
+                  <i className="bi bi-archive me-1"></i>
+                  Closed
+                </button>
+              </div>
+            </div>
+          </div>
+
           {/* Stats Cards */}
           <div className="row g-3 mb-4">
             <div className="col-12 col-sm-6 col-lg-4">
@@ -76,50 +120,6 @@ const DashboardItem = ({ leads }) => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Filters */}
-          <div className="card border-0 shadow-sm mb-4">
-            <div className="card-body">
-              <h5 className="card-title mb-3 fw-semibold">Quick Filters</h5>
-              <div className="d-flex flex-wrap gap-2">
-                <button
-                  className="btn btn-outline-primary"
-                  onClick={() => setSearchParams("status=New")}
-                >
-                  <i className="bi bi-star me-1"></i>
-                  New
-                </button>
-                <button
-                  className="btn btn-outline-info"
-                  onClick={() => setSearchParams("status=Contacted")}
-                >
-                  <i className="bi bi-telephone me-1"></i>
-                  Contacted
-                </button>
-                <button
-                  className="btn btn-outline-success"
-                  onClick={() => setSearchParams("status=Qualified")}
-                >
-                  <i className="bi bi-check-circle me-1"></i>
-                  Qualified
-                </button>
-                <button
-                  className="btn btn-outline-warning"
-                  onClick={() => setSearchParams("status=Proposal Sent")}
-                >
-                  <i className="bi bi-file-earmark-text me-1"></i>
-                  Proposal Sent
-                </button>
-                <button
-                  className="btn btn-outline-secondary"
-                  onClick={() => setSearchParams("status=Closed")}
-                >
-                  <i className="bi bi-archive me-1"></i>
-                  Closed
-                </button>
               </div>
             </div>
           </div>
@@ -179,17 +179,17 @@ const DashboardItem = ({ leads }) => {
 
           {/* Mobile FAB Button */}
           <Link
-            to="addLeads"
+            to="leads/addLeads"
             className="btn btn-primary rounded-circle shadow-lg position-fixed d-md-none d-flex align-items-center justify-content-center"
             style={{
-              width: "56px",
-              height: "56px",
+              width: "50px",
+              height: "50px",
               bottom: "20px",
               right: "20px",
               zIndex: 1000,
             }}
           >
-            <i className="bi bi-plus-lg fs-4"></i>
+            <i className="bi bi-plus-lg fs-4">+</i>
           </Link>
         </div>
       </div>

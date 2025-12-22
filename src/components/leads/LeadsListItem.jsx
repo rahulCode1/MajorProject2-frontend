@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import useLeadContext from "../../context/LeadContext";
+import Leads from "./Leads";
 
 const LeadsListItem = ({ leads }) => {
   const [salesAgentId, setSalesAgentId] = useState();
@@ -11,10 +12,14 @@ const LeadsListItem = ({ leads }) => {
     searchParams.get("status") === null
       ? leads
       : leads.filter((lead) => lead.status === searchParams.get("status"));
-  
-      const salesAgentFilter = !salesAgentId
-    ? filteredLeads
-    : filteredLeads.filter((lead) => lead.salesAgent._id === salesAgentId);
+
+  const salesAgentFilter =
+    searchParams.get("agent") === null
+      ? filteredLeads
+      : filteredLeads.filter(
+          (lead) =>
+            lead.salesAgent && lead.salesAgent._id === searchParams.get("agent")
+        );
 
   const leadsStatusArr = [
     { name: "New", value: "New" },
@@ -36,8 +41,6 @@ const LeadsListItem = ({ leads }) => {
     }
     setSearchParams(params);
   };
-
-  
 
   let displayLeads = searchParams.get("priority")
     ? [...salesAgentFilter].sort((a, b) => {
@@ -63,24 +66,23 @@ const LeadsListItem = ({ leads }) => {
     <>
       <div className="container-fluid p-0">
         {/* Header */}
-        <div className="bg-white shadow-sm border-bottom sticky-top">
-          <div className="container-fluid px-3 px-md-4 py-3">
-            <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2">
+        <div className="bg-white shadow-sm border-bottom rounded">
+          <div className="container-fluid  py-3">
+            <div className="d-flex justify-content-between align-items-center">
               <h1 className="h3 mb-0 fw-bold text-dark">All Leads</h1>
-              <div className="d-flex gap-2 flex-wrap">
-                <Link to="addLeads" className="btn btn-primary btn-sm">
-                  <i className="bi bi-plus-circle me-1"></i>
-                  Add New Lead
-                </Link>
-              </div>
+
+              <Link to="addLeads" className="btn btn-primary btn-sm">
+                <i className="bi bi-plus-circle me-1"></i>
+                Add New Lead
+              </Link>
             </div>
           </div>
         </div>
 
-        <div className="container-fluid px-3 px-md-4 py-4">
+        <div className="container-fluid   py-2">
           {/* Compact Filters - Horizontal Layout */}
           <div className="card border-0 shadow-sm mb-4">
-            <div className="card-body p-3">
+            <div className="card-body ">
               <div className="row g-2 align-items-end">
                 {/* Status Filter */}
                 <div className="col-6 col-md-3">
@@ -118,8 +120,9 @@ const LeadsListItem = ({ leads }) => {
                   <select
                     id="agentId"
                     className="form-select form-select-sm"
-                    onChange={(e) => setSalesAgentId(e.target.value)}
-                    value={salesAgentId || ""}
+                    onChange={(e) =>
+                      updateSearchParams("agent", e.target.value)
+                    }
                   >
                     <option value="">All Agents</option>
                     {salesAgent &&
@@ -200,88 +203,16 @@ const LeadsListItem = ({ leads }) => {
 
           {/* Leads List */}
           {displayLeads && displayLeads.length !== 0 ? (
-            <>
+            <div>
               <div className="mb-3 text-muted">
                 <small>Showing {displayLeads.length} lead(s)</small>
               </div>
               <div className="row g-3">
                 {displayLeads.map((lead, index) => (
-                  <div key={index} className="col-12 col-xl-6">
-                    <Link
-                      to={`/leads/${lead.id}`}
-                      className="text-decoration-none"
-                    >
-                      <div className="card border-0 shadow-sm lead-card">
-                        <div className="card-body p-3">
-                          <div className="d-flex align-items-start">
-                            {/* Lead Icon */}
-                            <div className="bg-primary bg-opacity-10 rounded-circle p-2 me-3 flex-shrink-0">
-                              <i className="bi bi-person-fill text-primary fs-5"></i>
-                            </div>
-
-                            {/* Lead Info */}
-                            <div className="flex-grow-1">
-                              <h5 className="mb-2 fw-semibold text-dark">
-                                {lead.name}
-                              </h5>
-
-                              <div className="d-flex align-items-center gap-2 flex-wrap mb-3">
-                                <span
-                                  className={`badge ${
-                                    lead.status === "New"
-                                      ? "bg-primary"
-                                      : lead.status === "Contacted"
-                                      ? "bg-info"
-                                      : lead.status === "Qualified"
-                                      ? "bg-success"
-                                      : lead.status === "Proposal Sent"
-                                      ? "bg-warning text-dark"
-                                      : "bg-secondary"
-                                  }`}
-                                >
-                                  {lead.status}
-                                </span>
-                                <span
-                                  className={`badge ${
-                                    lead.priority === "High"
-                                      ? "bg-danger"
-                                      : lead.priority === "Medium"
-                                      ? "bg-warning text-dark"
-                                      : "bg-secondary"
-                                  }`}
-                                >
-                                  {lead.priority}
-                                </span>
-                              </div>
-
-                              <div className="row g-2">
-                                <div className="col-sm-6">
-                                  <small className="text-muted d-block">
-                                    <i className="bi bi-person-badge me-1"></i>
-                                    {lead.salesAgent.name}
-                                  </small>
-                                </div>
-                                <div className="col-sm-6">
-                                  <small className="text-muted d-block">
-                                    <i className="bi bi-calendar-event me-1"></i>
-                                    {lead.timeToClose} days to close
-                                  </small>
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Arrow Icon */}
-                            <div className="ms-2 text-muted">
-                              <i className="bi bi-chevron-right"></i>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
+                  <Leads lead={lead} index={index} />
                 ))}
               </div>
-            </>
+            </div>
           ) : (
             <div className="card border-0 shadow-sm">
               <div className="card-body text-center py-5">
