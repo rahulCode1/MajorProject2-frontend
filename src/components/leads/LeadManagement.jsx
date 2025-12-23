@@ -1,11 +1,7 @@
 import { Link } from "react-router-dom";
 import CommentPage from "../../pages/CommentPage";
 
-const LeadManagement = ({lead, comments }) => {
-
-
-  
-
+const LeadManagement = ({ lead, comments }) => {
   return (
     <>
       <div className="min-vh-100 bg-light">
@@ -27,34 +23,48 @@ const LeadManagement = ({lead, comments }) => {
                 <div className="card-body p-4">
                   <div className="row g-3">
                     <div className="col-12 col-md-6">
-                      <p className="text-muted small mb-1">Lead Name</p>
-                      <h5 className="fw-bold mb-0">{lead.name}</h5>
+                      <p className="text-muted small mb-0">
+                        <span className="me-2">Lead Name:</span>
+                        <span className="fw-bold text-dark">{lead.name}</span>
+                      </p>
                     </div>
                     <div className="col-12 col-md-6">
-                      <p className="text-muted small mb-1">Sales Agent</p>
-                      <h5 className="fw-bold mb-0">
-                        {lead.salesAgent ? lead.salesAgent.name : "Unknown"}
-                      </h5>
+                      <p className="text-muted small mb-0">
+                        <span className="me-2">Sales Agent:</span>
+                        <span className="fw-bold text-dark">
+                          {lead.salesAgent ? lead.salesAgent.name : "Unknown"}
+                        </span>
+                      </p>
                     </div>
                     <div className="col-12 col-md-6">
-                      <p className="text-muted small mb-1">Lead Source</p>
-                      <h5 className="fw-bold mb-0">{lead.source}</h5>
+                      <p className="text-muted small mb-0">
+                        <span className="me-2">Lead Source:</span>
+                        <span className="fw-bold text-dark">{lead.source}</span>
+                      </p>
                     </div>
                     <div className="col-12 col-md-6">
-                      <p className="text-muted small mb-1">Lead Status</p>
-                      <h5 className="mb-0">
+                      <p className="text-muted small mb-0">
+                        <span className="me-2">Lead Status:</span>
                         <span className="badge bg-primary rounded-pill">
                           {lead.status}
                         </span>
-                      </h5>
+                      </p>
                     </div>
                     <div className="col-12 col-md-6">
-                      <p className="text-muted small mb-1">Priority</p>
-                      <h5 className="fw-bold mb-0">{lead.priority}</h5>
+                      <p className="text-muted small mb-0">
+                        <span className="me-2">Priority:</span>
+                        <span className="fw-bold text-dark">
+                          {lead.priority}
+                        </span>
+                      </p>
                     </div>
                     <div className="col-12 col-md-6">
-                      <p className="text-muted small mb-1">Time to Close</p>
-                      <h5 className="fw-bold mb-0">{lead.timeToClose}</h5>
+                      <p className="text-muted small mb-0">
+                        <span className="me-2">Time to Close:</span>
+                        <span className="fw-bold text-dark">
+                          {lead.timeToClose}
+                        </span>
+                      </p>
                     </div>
                   </div>
                   <hr className="my-4" />

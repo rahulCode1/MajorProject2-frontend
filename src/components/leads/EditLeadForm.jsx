@@ -1,5 +1,7 @@
-import {  Form, useNavigation } from "react-router-dom";
+import axios from "axios";
+import {  Form, useNavigation , redirect} from "react-router-dom";
 import SubmitLoadingSpinner from "../../components/SubmitLoadingSpinnr";
+import {showErrorToast, showLoadingToast, showSuccessToast} from "../../utils/toast"
 
 import useLeadContext from "../../context/LeadContext";
 
@@ -192,3 +194,35 @@ const EditLeadForm = ({lead }) => {
 };
 
 export default EditLeadForm;
+
+export const action = async ({ request, params }) => {
+  const leadId = params.id;
+  const formData = await request.formData();
+  const toastId = showLoadingToast("Update lead...");
+
+  const data = {
+    name: formData.get("name"),
+    source: formData.get("source"),
+    closedAt: formData.get("closedAt"),
+    status: formData.get("status"),
+    salesAgent: formData.get("salesAgent"),
+    timeToClose: Number(formData.get("timeToClose")),
+    priority: formData.get("priority"),
+    tags: formData.getAll("tags"), // ✅ multiple checkbox
+  };
+
+  try {
+    await axios.patch(
+      `${process.env.REACT_APP_BACKEND_URL}/leads/${leadId}`,
+      data
+    );
+
+    showSuccessToast(toastId, "Lead  update successfully.");
+    return redirect(`/leads/${leadId}`);
+  } catch (error) {
+    showErrorToast(
+      toastId,
+      error.response?.data?.message || "Error occurred while update lead ❌"
+    );
+  }
+};

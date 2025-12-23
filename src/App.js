@@ -5,7 +5,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js"
 import "react-toastify/dist/ReactToastify.css";
 import "./utils/chartSetup"
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
-import LeadForm from './pages/LeadForm';
+import LeadForm , {action as addLeadAction} from './pages/LeadForm';
 import RootLayout from './components/RootLayout';
 import { LeadProvider } from './context/LeadContext';
 import ErrorPage from './pages/ErrorPage';
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
               { path: "edit", element: <EditLeadPage />, action: editLeadAction },
             ]
           },
-          { path: "addLeads", element: <LeadForm /> },
+          { path: "addLeads", element: <LeadForm /> , action: addLeadAction},
           { path: "newLeads", element: <LeadStatusViewPage /> },
           { path: "leadByAgents", element: <LeadsBySalesAgentPage /> }
         ]
