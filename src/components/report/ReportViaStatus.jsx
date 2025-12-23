@@ -1,6 +1,9 @@
 import { Bar } from "react-chartjs-2";
 
 const ReportViaStatus = ({ allLeads }) => {
+
+
+
   const groupedLeads = allLeads.reduce((acc, curr) => {
     const key = curr.status;
 
@@ -12,8 +15,10 @@ const ReportViaStatus = ({ allLeads }) => {
     return acc;
   }, {});
 
+
+
   const data = {
-    labels: Object.keys(groupedLeads).reverse(),
+    labels: Object.keys(groupedLeads),
     datasets: [
       {
         label: "Leads via status",

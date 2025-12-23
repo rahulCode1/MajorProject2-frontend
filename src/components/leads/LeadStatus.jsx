@@ -9,7 +9,7 @@ const LeadStatus = ({ allLeads }) => {
   const filterNewLeads =
     searchParams.get("status") === null
       ? allLeads
-      : allLeads.filter((lead) => lead.status === "New");
+      : allLeads.filter((lead) => lead.status === searchParams.get("status"));
   const filterByAgents =
     searchParams.get("agent") === null
       ? filterNewLeads
