@@ -1,13 +1,13 @@
 import { Await, Link, useRouteLoaderData } from "react-router-dom";
-import useLeadContext from "../context/LeadContext";
-import TotalLeadsClosed from "../components/report/TotalLeadsClosed";
+import TotalLeadsClosed from "../components/report/TotalLeadsClosedOrIn";
 import LeadsClosedByAgent from "../components/report/LeadsClosedByAgent";
 import ReportViaStatus from "../components/report/ReportViaStatus";
 import Loading from "../components/Loading";
 import { Suspense } from "react";
 
 const ReportPage = () => {
-  const { leadsNotOrInPipeline, leadsClosedByAgent } = useLeadContext();
+
+
   const { leads } = useRouteLoaderData("allLeads");
 
   return (
@@ -29,7 +29,12 @@ const ReportPage = () => {
           <div className="col-12 col-lg-4">
             <div className="card h-100 shadow-sm">
               <div className="card-body d-flex justify-content-center align-items-center">
-                <TotalLeadsClosed leadsNotOrInPipeline={leadsNotOrInPipeline} />
+                
+                <Suspense fallback={<Loading />}>
+                  <Await resolve={leads}>
+                    {(isLeadLoad) => <TotalLeadsClosed leads={isLeadLoad} />}
+                  </Await>
+                </Suspense>
               </div>
             </div>
           </div>
@@ -38,7 +43,11 @@ const ReportPage = () => {
           <div className="col-12 col-lg-8">
             <div className="card h-100 shadow-sm">
               <div className="card-body">
-                <LeadsClosedByAgent leads={leadsClosedByAgent} />
+                <Suspense fallback={<Loading />}>
+                  <Await resolve={leads}>
+                    {(isLeadLoad) => <LeadsClosedByAgent leads={isLeadLoad} />}
+                  </Await>
+                </Suspense>
               </div>
             </div>
           </div>

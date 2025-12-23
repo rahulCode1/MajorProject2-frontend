@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
-const SalesAgentsCard = ({ salesAgent }) => {
+const SalesAgentsCard = ({ salesAgent, isLoading }) => {
   return (
     <>
       <div className="container-fluid p-0">
@@ -12,7 +13,7 @@ const SalesAgentsCard = ({ salesAgent }) => {
               <div className="d-flex gap-2">
                 <Link to="add" className="btn btn-primary">
                   <i className="bi bi-plus-circle me-2"></i>
-                  Add  Agent
+                  Add Agent
                 </Link>
               </div>
             </div>
@@ -25,7 +26,9 @@ const SalesAgentsCard = ({ salesAgent }) => {
             <div className="col-lg-10 ">
               <div className="card shadow-sm ">
                 <div className="card-body p-0 ">
-                  {salesAgent && salesAgent.length !== 0 ? (
+                  {isLoading ? (
+                    <Loading />
+                  ) : salesAgent && salesAgent.length !== 0 ? (
                     <div className="list-group list-group-flush rounded">
                       {salesAgent.map((agent, index) => (
                         <div key={index} className="list-group-item">

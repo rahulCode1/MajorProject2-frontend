@@ -1,10 +1,10 @@
 import SalesAgentsCard from "../components/SalesAgentCard";
 import useLeadContext from "../context/LeadContext";
 const SalesAgent = () => {
-   const { salesAgent } = useLeadContext();
+   const { salesAgent, isLoading } = useLeadContext();
   return (
     <>
-      <SalesAgentsCard salesAgent={salesAgent}/>
+      <SalesAgentsCard salesAgent={salesAgent} isLoading={isLoading}/>
     </>
   );
 };

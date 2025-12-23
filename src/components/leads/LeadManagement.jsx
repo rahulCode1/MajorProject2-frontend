@@ -6,7 +6,7 @@ const LeadManagement = ({ lead, comments }) => {
     <>
       <div className="min-vh-100 bg-light">
         {/* Header Section */}
-        <div className="bg-white shadow-sm border-bottom">
+        <div className="bg-white shadow-sm border-bottom rounded">
           <div className="container py-3 d-flex justify-content-between px-4">
             <h2>Lead details </h2>
             <Link to="/" className="btn btn-outline-primary">

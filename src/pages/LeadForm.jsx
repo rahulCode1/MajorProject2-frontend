@@ -1,4 +1,4 @@
-import { Form, useNavigation, redirect } from "react-router-dom";
+import { Form, useNavigation, redirect , Link} from "react-router-dom";
 import axios from "axios";
 import SubmitLoadingSpinner from "../components/SubmitLoadingSpinnr";
 import useLeadContext from "../context/LeadContext";
@@ -16,7 +16,22 @@ const LeadForm = () => {
 
   return (
     <>
-      <Form method="post" className="container py-4">
+      <div className="bg-white shadow-sm border-bottom sticky-top rounded mb-4">
+        <div className="container-fluid px-4 py-3">
+          <div className="d-flex justify-content-between align-items-center">
+            <h3 className="h4 mb-0 fw-bold text-dark">Lead Form</h3>
+            <Link
+              to="/"
+              className="btn btn-primary d-none d-md-inline-flex align-items-center"
+            >
+              <i className="bi bi-plus-circle me-2"></i>
+              Go to Dashboard
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <Form method="post" className="container py-4 shadow rounded">
         {/* Lead Name */}
         <div className="mb-3">
           <label className="form-label">Lead Name</label>
@@ -40,7 +55,7 @@ const LeadForm = () => {
                 className="form-select"
                 required
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   Select Lead Source
                 </option>
                 <option value="Website">Website</option>
@@ -77,7 +92,7 @@ const LeadForm = () => {
                 className="form-select"
                 required
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   Lead Status
                 </option>
                 <option value="New">New</option>
@@ -98,6 +113,9 @@ const LeadForm = () => {
                 className="form-select"
                 required
               >
+                <option value={""} disabled selected>
+                  Select Sales Agent{" "}
+                </option>
                 {salesAgent.map((agent) => (
                   <option value={agent.id} id="salesAgent">
                     {agent.name}
@@ -132,7 +150,7 @@ const LeadForm = () => {
                 className="form-select"
                 required
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   Priority
                 </option>
                 <option value="High">High</option>
@@ -151,12 +169,12 @@ const LeadForm = () => {
 
           <div className="form-check">
             <input type="checkbox" name="tags" value="High Value" />
-            <label>High Value</label>
+            <label className="px-2">High Value</label>
           </div>
 
           <div className="form-check">
             <input type="checkbox" name="tags" value="Follow-up" />
-            <label>Follow-up</label>
+            <label className="px-2">Follow-up</label>
           </div>
         </div>
 

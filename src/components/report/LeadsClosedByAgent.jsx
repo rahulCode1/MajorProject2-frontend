@@ -1,14 +1,42 @@
 import { Bar } from "react-chartjs-2";
 
 const LeadsClosedByAgent = ({ leads }) => {
+
+    const closedByAgent = leads.reduce((acc, lead) => {
+
+            if (lead.status !== "Closed") return acc;
+
+            const agentName = lead.salesAgent ?  lead.salesAgent.name : "Unknown"
+
+
+            if (!acc[agentName]) {
+                acc[agentName] = 0;
+            }
+
+
+            acc[agentName] += 1;
+
+            return acc;
+        }, {});
+
+       
+
+        
+        const groupedClosedLeads = Object.entries(closedByAgent).map(
+            ([agent, count]) => ({
+                salesAgent: agent,
+                closedLeads: count
+            })
+        );
+
   const data = {
-    labels: leads.map(
+    labels: groupedClosedLeads.map(
       (lead) => `${lead && lead.salesAgent ? lead.salesAgent : "Unknown"}`
     ),
     datasets: [
       {
         label: "Leads closed by sales agent.",
-        data: leads.map((lead) => lead.closedLeads),
+        data: groupedClosedLeads.map((lead) => lead.closedLeads),
         backgroundColor: [
           "#3B82F6",
           "#22C55E",

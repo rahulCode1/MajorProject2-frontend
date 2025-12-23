@@ -153,9 +153,9 @@ const DashboardItem = ({ leads }) => {
                                   {lead.name}
                                 </div>
                                 <div className="small text-muted mt-1">
-                                  Status:
-                                  <span className="fw-medium text-secondary">
-                                    {lead.status}
+                                  Status: 
+                                  <span className="fw-medium text-secondary px-2">
+                                     {lead.status}
                                   </span>
                                 </div>
                               </div>
