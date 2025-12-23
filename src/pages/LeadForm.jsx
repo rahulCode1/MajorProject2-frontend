@@ -1,5 +1,4 @@
-
-import {  Form, useNavigation, redirect } from "react-router-dom";
+import { Form, useNavigation, redirect } from "react-router-dom";
 import axios from "axios";
 import SubmitLoadingSpinner from "../components/SubmitLoadingSpinnr";
 import useLeadContext from "../context/LeadContext";
@@ -151,24 +150,13 @@ const LeadForm = () => {
           </label>
 
           <div className="form-check">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              value="High Value"
-              name="tags"
-              required
-            />
-            <label className="form-check-label">High Value</label>
+            <input type="checkbox" name="tags" value="High Value" />
+            <label>High Value</label>
           </div>
 
           <div className="form-check">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              value="Follow-up"
-              name="tags"
-            />
-            <label className="form-check-label">Follow-up</label>
+            <input type="checkbox" name="tags" value="Follow-up" />
+            <label>Follow-up</label>
           </div>
         </div>
 
