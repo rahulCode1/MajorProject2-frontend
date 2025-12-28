@@ -1,70 +1,200 @@
-# Getting Started with Create React App
+# Leads Management
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack leads management app where you can browse, search, add, edit & view details of leads.
+Built with React frontend, Express/Node backend, Mongodb database.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Demo Link
 
-### `npm start`
+[Live Demo](https://major-project2-frontend-rho.vercel.app/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Quick Start
 
-### `npm test`
+```
+git clone  https://github.com/rahulCode1/MajorProject2-frontend.git
+cd my-app
+npm install
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies
 
-### `npm run build`
+- React JS
+- React Router
+- Node JS
+- Express
+- Mongodb
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Demo Video
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+watch a walkthrough (6 minutes) of all the major features of this app:
+[Loom Video](https://drive.google.com/file/d/1vU0BklskDqkmi81hU1WRfVzSTW-HklBo/view?usp=sharing)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## Features
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Home**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Display list of all leads.
+- Filter Leads
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**Leads**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Display list of all leads.
+- Different filters & sort.
 
-## Learn More
+**Add Lead**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Add new lead.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Sales Agent**
 
-### Code Splitting
+- Get all sales agent.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Add Agent**
 
-### Analyzing the Bundle Size
+- Add new Sales agent.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Report**
 
-### Making a Progressive Web App
+- Lead report with chart.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**Status**
 
-### Advanced Configuration
+- Leads via status
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**Lead by Agents**
 
-### Deployment
+- Leads via sales agent.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+**Setting**
 
-### `npm run build` fails to minify
+- Manage sales agent & leads.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## API Reference
+
+### **GET api/leads**
+
+List of all leads
+Sample Response
+
+```
+[{id, name, source, ...}, ...]
+```
+
+### **POST api/lead**<br>
+
+Add new Lead
+Sample Response
+
+```
+{id, name, source...}
+```
+
+### **GET api/lead/id**<br>
+
+Lead details
+Sample Response
+
+```
+{id, name, source...}
+```
+
+### **PATCH api/lead/id**<br>
+
+Edit lead
+Sample Response
+
+```
+{id, name, source...}
+```
+
+### **DELETE api/lead/id**<br>
+
+Delete lead
+
+### **POST api/lead/id/comments**<br>
+
+Add comment on lead
+Sample Response
+
+```
+{id, author, commentText, ...}
+```
+
+### **GET api/lead/id/comments**<br>
+
+Get all comments
+Sample Response
+
+```
+[{id, author, commentText, ...}, ...]
+```
+
+### **GET api/report/last-week**<br>
+
+Get leads closed last week
+Sample Response
+
+```
+{id, name, salesAgent, ...}
+```
+
+### **GET api/report/pipeline**<br>
+
+Get active or closed lead.
+Sample Response
+
+```
+{activeLeads, closedLeads}
+```
+
+### **GET api/report/closed-by-agent**<br>
+
+Get lead closed by agent.
+Sample Response
+
+```
+[
+    {
+        agent: [
+            {
+                id, name, status, ...
+            }
+        ]
+    }
+]
+```
+
+## **POST api/agent**<br>
+
+Add new sales agent
+Sample response
+
+```
+{name, email}
+```
+
+## **GET api/agent**<br>
+
+Get all sales agent
+Sample response
+
+```
+[{name, email}, ...]
+```
+
+## **DELETE api/agent/id**<br>
+
+Delete sales agent
+Sample response
+
+## Contact
+
+For bugs or feature request, please reach out to rahulkumawat50665@gmail.com
